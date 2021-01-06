@@ -59,7 +59,7 @@ float RapPhim::GiaVeTai(int M)
         }
         if (M > temp + 1)
         {
-            return GiaHangGheTrungTam - (M - temp) * 2000;
+            return GiaHangGheTrungTam - (M - temp - 1) * 2000;
         }
         if (M == temp + 1)
         {
@@ -71,8 +71,8 @@ float RapPhim::GiaVeTai(int M)
 int RapPhim::TinhSoGheTrong()
 {
     int DemSoGheTrong = 0;
-    for (int i = 0; i < M; i++)
-        for (int j = 0; j < N; j++)
+    for (int i = 1; i <= M; i++)
+        for (int j = 1; j <= N; j++)
             if (ViTriGhe[i][j] == false)
                 DemSoGheTrong++;
     return DemSoGheTrong;
@@ -96,13 +96,13 @@ void CRapThuong::DatVe(int M, int N)
     {
         ViTriGhe[M][N] = true;
         DoanhThu += this->GiaVeTai(M);
+        cout << "\nDat ve thanh cong!" << endl;
     }
     else
     {
-        cout << "Ghe nay da co khach dat truoc do!" << endl;
+        cout << "\nGhe nay da co khach dat truoc do!" << endl;
     }
 }
-
 
 CRapThuong::CRapThuong(int M, int N)
 {
@@ -122,7 +122,7 @@ public:
     void DatVe(int, int, int);
 };
 
-CRapCaoCap::CRapCaoCap(int N, int M)
+CRapCaoCap::CRapCaoCap(int M, int N)
 {
     DoanhThu = 0;
     this->M = M;
@@ -144,19 +144,26 @@ void CRapCaoCap::DatVe(int M, int N, int Ngay)
     {
         ViTriGhe[M][N] = true;
         if (Ngay == 5)
+        {
             DoanhThu += 0.5 * this->GiaVeTai(M);
+            cout << "\nDat ve thanh cong!" << endl;
+        }
         else
+        {
             DoanhThu += this->GiaVeTai(M);
+            cout << "\nDat ve thanh cong!" << endl;
+        }
     }
     else
     {
-        cout << "Ghe nay da co khach dat truoc do!" << endl;
+        cout << "\nGhe nay da co khach dat truoc do!" << endl;
     }
 }
 #pragma endregion
 
 
 #pragma region Câu 2
+/*=========================================CLASS NGAY=========================================*/
 class CNgay
 {
 private:
@@ -191,7 +198,7 @@ CNgay::CNgay()
     Thang = 0;
     Nam = 0;
 }
-
+/*=========================================CLASS NHÂN VIÊN=========================================*/
 class CNhanVien
 {
 protected:
@@ -245,7 +252,7 @@ void CNhanVien::Xuat()
     cout << "Dia chi: " << DiaChi << endl;
     cout << "Luong co ban: " << LuongCoBan << endl;
 }
-
+/*=========================================CLASS PROGRAMMER=========================================*/
 class CPro : public CNhanVien
 {
 private:
@@ -280,7 +287,7 @@ void CPro::Xuat()
     cout << "Overtime:" << Overtime;
     cout << endl;
 }
-
+/*=========================================CLASS DESIGNER=========================================*/
 class CDes : public CNhanVien
 {
 private:
@@ -315,7 +322,7 @@ void CDes::Xuat()
     cout << "Bonus:" << Bonus;
     cout << endl;
 }
-
+/*=========================================CLASS TESTER=========================================*/
 class CTes : public CNhanVien
 {
 private:
@@ -350,7 +357,7 @@ void CTes::Xuat()
     cout << "Error:" << Error;
     cout << endl;
 }
-
+/*=========================================CLASS CÔNG TY=========================================*/
 class CCongTy
 {
 private:
@@ -406,10 +413,7 @@ float CCongTy::TongLuong()
 }
 
 #pragma endregion
-
-
-
-
+/*=========================================HÀM MAIN=========================================*/
 void main()
 {
     int BaiTap;
@@ -465,7 +469,7 @@ void main()
                             cout << "Ghe so may trong hang: ";
                             cin >> VT_SoGhe;
                             RapThuong->DatVe(VT_Hang, VT_SoGhe);
-                            cout << "\nThem 1 ve thanh cong" << endl;
+
                             break;
                         }
                         case 2:
@@ -533,13 +537,17 @@ void main()
                         {
                         case 1:
                         {
+                            int Ngay;
+
                             cout << "Lua chon 1:" << endl;
                             cout << "Nhap hang ghe: ";
                             cin >> VT_Hang;
                             cout << "Ghe so may trong hang: ";
                             cin >> VT_SoGhe;
-                            RapThuong->DatVe(VT_Hang, VT_SoGhe);
-                            cout << "\nThem 1 ve thanh cong" << endl;
+                            cout << "Nhap ngay(2, 3,..., 7, 1): ";
+                            cin >> Ngay;
+                            RapCaoCap->DatVe(VT_Hang, VT_SoGhe, Ngay);
+                            
                             break;
                         }
                         case 2:
@@ -589,27 +597,21 @@ void main()
 #pragma endregion
             break;
         }
-       case 2:
-       {
-           cout << "\nBai Tap 2: " << endl;
+        case 2:
+        {
+            cout << "\nBai Tap 2: " << endl;
 
 #pragma region Câu 2
-           CCongTy _congty;
-           _congty.Nhap();
-           _congty.Xuat();
-           cout << "Tong luong: " << _congty.TongLuong();
+            CCongTy _congty;
+            _congty.Nhap();
+            _congty.Xuat();
+            cout << "Tong luong: " << _congty.TongLuong() << endl;
 #pragma endregion
-           break;
-       }
+            break;
+        }
         default:
             break;
         }
 
     } while (BaiTap <= 2 && BaiTap > 0);
-
-
-
-
-
-
 }
